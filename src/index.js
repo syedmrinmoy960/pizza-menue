@@ -52,7 +52,7 @@ const pizzas = [
 function App() {
   return (
     <div className="App">
-      <h1>Pizzeria Menu</h1>
+      <h1>Boshir vair Pizzeria Menu</h1>
       <div className="grid-container">
         {pizzas.map((pizza, index) => (
           <Pizza
