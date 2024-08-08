@@ -1,38 +1,72 @@
 .App {
   text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+  background-color: #d6b8b8;
   min-height: 100vh;
+  padding: 20px;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* Ensures two columns */
+  gap: 20px; /* Spacing between grid items */
+  justify-items: center; /* Horizontally centers items */
+  max-width: 1200px; /* Limits maximum width of the container */
+  margin: 0 auto; /* Centers the container horizontally */
+}
+.Pizza-card {
+  background-color: #e7dbdb;
+  border: 1px solid #f0d2d2;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 90%; /* Adjust the width to ensure it does not stretch too wide */
   display: flex;
-  flex-direction: column;
+  flex-direction: row; /* Stacks elements vertically */
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  text-align: center;
+  position: relative; /* Position relative to allow absolute positioning of elements inside */
 }
 
-.App-link {
-  color: #61dafb;
+.Pizza-card img {
+  width: 200px; /* Fixed width for the image */
+  height: 200px; /* Fixed height for the image */
+  border-radius: 50%; /* Makes the image circular */
+  margin-bottom: 10px; /* Adds space between the image and the text below it */
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.Pizza-card h2 {
+  font-size: 18px; /* Increased font size for visibility */
+  color: #333; /* Darker font color for better readability */
+  position: absolute; /* Absolute positioning */
+  top: 210px; /* Position below the image */
+  left: 22%; /* Center below the image */
+  transform: translateX(-50%); /* Centering adjustment */
+  width: 100%; /* Allows for proper centering */
+}
+.Pizza-card h3 {
+  font-size: 18px; /* Increased font size for visibility */
+  color: #333; /* Darker font color for better readability */
+  position: absolute; /* Absolute positioning */
+  top: 210px; /* Position below the image */
+  left: 50%; /* Center below the image */
+  transform: translateX(-50%); /* Centering adjustment */
+  width: 100%; /* Allows for proper centering */
+}
+.Pizza-card .details {
+  display: flex; /* Flexbox for side-by-side layout of price and ingredients */
+  flex-direction: row; /* Horizontal layout */
+  justify-content: space-between; /* Space between price and ingredients */
+  width: 100%; /* Full width of the card */
+}
+
+.Pizza-card .price {
+  font-size: 16px; /* Font size for price */
+  color: #555; /* Color for price text */
+  font-weight: bold; /* Bold font weight for price */
+}
+
+.Pizza-card .ingredients {
+  font-size: 16px; /* Font size for ingredients */
+  color: #777; /* Color for ingredients text */
+  text-align: left; /* Left align for ingredients */
 }
