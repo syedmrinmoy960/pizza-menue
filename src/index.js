@@ -53,6 +53,7 @@ function App() {
   return (
     <div className="App">
      <Header/>
+     
      <Menu pizzas={pizzas} /> 
       <Footer/>
     </div>
@@ -60,16 +61,21 @@ function App() {
 }
 
 function Header(){
-    
-  return <h1>Boshir vair Pizzeria Menu Dekho</h1>
+  
+  return (
+    <header className="header">
+      <Logo />
+      <h1>Boshir vair Pizzeria Menu Dekho</h1>
+    </header>
+  );
 }
 
-function Footer(){
-   
-  //  return React.createElement("Footer",null,"We are currently open!");
-  return <footer id="footer"> {new Date().toLocaleTimeString()}
-        <h2>Restraunt &copy; all rights reserved</h2>
-    </footer>
+function Logo() {
+  return (
+    <div className="logo-container">
+      <a href="pizza.com" className="logo">PizzaBites</a>
+    </div>
+  );
 }
 
 function Menu({pizzas}){
@@ -107,6 +113,16 @@ function Pizza({ name, ingredients, price, photo, soldOut }) {
     </div>
   );
   
+}
+
+function Footer(){
+   
+  const hour=new Date().getHours();
+  console.log(hour);
+  //  return React.createElement("Footer",null,"We are currently open!");
+  return <footer id="footer"> {new Date().toLocaleTimeString()}
+        <h2>Restraunt &copy; all rights reserved</h2>
+    </footer>
 }
 
 // React v18

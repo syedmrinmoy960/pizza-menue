@@ -70,3 +70,14 @@
   color: #777; /* Color for ingredients text */
   text-align: left; /* Left align for ingredients */
 }
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  text-decoration: none;
+  font-size: 24px;
+  font-weight: bold;
+  color: #e63946; /* Color for the logo text */
+}
