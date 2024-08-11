@@ -52,24 +52,45 @@ const pizzas = [
 function App() {
   return (
     <div className="App">
-      <h1>Pizzeria Menu</h1>
-      <div className="grid-container">
-        {pizzas.map((pizza, index) => (
-          <Pizza
-            key={index}
-            photo={pizza.photo}
-            name={pizza.name}
-            ingredients={pizza.ingredients}
-            price={pizza.price}
-           
-            soldOut={pizza.soldOut}
-          />
-        ))}
-      </div>
+     <Header/>
+     <Menu pizzas={pizzas} /> 
+      <Footer/>
     </div>
   );
 }
 
+function Header(){
+    
+  return <h1>Boshir vair Pizzeria Menu Dekho</h1>
+}
+
+function Footer(){
+   
+  //  return React.createElement("Footer",null,"We are currently open!");
+  return <footer id="footer"> {new Date().toLocaleTimeString()}
+        <h2>Restraunt &copy; all rights reserved</h2>
+    </footer>
+}
+
+function Menu({pizzas}){
+  
+  return(
+  <div className="grid-container">
+  {pizzas.map((pizza, index) => (
+    <Pizza
+      key={index}
+      photo={pizza.photo}
+      name={pizza.name}
+      ingredients={pizza.ingredients}
+      price={pizza.price}
+     
+      soldOut={pizza.soldOut}
+    />
+    
+  ))}
+</div>
+  )
+}
 function Pizza({ name, ingredients, price, photo, soldOut }) {
   return (
     <div className="Pizza-card">
