@@ -301,10 +301,37 @@ function Pizza({ pizza, addToCart }) {
   );
 }
 
+// function CartPage({ cart, clearCart }) {
+//   return (
+//     <div className="cart-page">
+//       <h2>Your Cart is Ready</h2>
+//       {cart.length === 0 ? (
+//         <p>Your cart is empty.</p>
+//       ) : (
+//         <>
+//           <ul>
+//             {cart.map((item, index) => (
+//               <li key={index} className="cart-item">
+//                 <img src={item.photo} alt={item.name} className="cart-item-photo" />
+//                 <div className="cart-item-details">
+//                   <span>{item.name}</span> - <span>{item.quantity} x ${item.price.toFixed(2)}</span>
+//                 </div>
+//               </li>
+//             ))}
+//           </ul>
+//           <button onClick={clearCart} className="clear-cart-button">Clear Cart</button>
+//           <PaymentForm />
+//         </>
+//       )}
+//     </div>
+//   );
+// }
 function CartPage({ cart, clearCart }) {
+  const totalCost = cart.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2);
+
   return (
     <div className="cart-page">
-      <h2>Your Cart is Ready</h2>
+      <h2>Your Cart</h2>
       {cart.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
@@ -319,8 +346,12 @@ function CartPage({ cart, clearCart }) {
               </li>
             ))}
           </ul>
+          <div className="total-cost">
+            <h3>Total Cost: ${totalCost}</h3>
+          </div>
           <button onClick={clearCart} className="clear-cart-button">Clear Cart</button>
           <PaymentForm />
+          
         </>
       )}
     </div>
