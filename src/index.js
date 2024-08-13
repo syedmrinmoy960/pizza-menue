@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
 
+
 // Sample pizza data with categories
 const pizzas = [
   {
@@ -104,7 +105,9 @@ function App() {
             />
           </Routes>
         </div>
-        <Footer />
+      
+      <Footer />
+
       </div>
     </Router>
   );
@@ -152,7 +155,7 @@ function Header({ cart, setCategory, categories }) {
 function Logo() {
   return (
     <div className="logo-container">
-      <a href="pizza.com" className="logo">PizzaBites</a>
+      <a href="/" className="logo">PizzaBites</a>
     </div>
   );
 }
@@ -257,6 +260,24 @@ function PaymentForm() {
   );
 }
 
+// function Footer() {
+//   const hour = new Date().getHours(); // Get the current hour in 24-hour format
+//   const openhour = 9; // Restaurant opens at 9 AM
+//   const closehour = 18; // Restaurant closes at 6 PM
+//   const isOpen = hour >= openhour && hour < closehour; // Check if the current time is within open hours
+
+//   return (
+//     <footer id="footer">
+//       {new Date().toLocaleTimeString()}
+//       <h2>
+//         Restaurant &copy; All rights reserved (
+//         {isOpen ? "We are open now!" : "Sorry, we are closed"})
+//       </h2>
+//     </footer>
+//   );
+// }
+
+
 function Footer() {
   const hour = new Date().getHours(); // Get the current hour in 24-hour format
   const openhour = 9; // Restaurant opens at 9 AM
@@ -264,15 +285,21 @@ function Footer() {
   const isOpen = hour >= openhour && hour < closehour; // Check if the current time is within open hours
 
   return (
-    <footer id="footer">
-      {new Date().toLocaleTimeString()}
+    <footer id="footer" style={{ textAlign: "center", padding: "20px", background: "#f8f8f8" }}>
+      <p>{new Date().toLocaleTimeString()}</p>
       <h2>
         Restaurant &copy; All rights reserved (
         {isOpen ? "We are open now!" : "Sorry, we are closed"})
       </h2>
+      <div style={{ marginTop: "20px", display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
+        <img src={"/Pizzas/footer.webp"} alt="bKash Logo" style={{ width: "1600px", margin: "30px" }} />
+        {/* Increase the width as necessary; adjust margin for spacing */}
+      </div>
     </footer>
   );
 }
+
+
 
 // React v18
 const root = ReactDOM.createRoot(document.getElementById("root"));
