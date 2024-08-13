@@ -257,3 +257,28 @@
 .content-container {
   flex: 1;
 }
+
+
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  padding: 30px;
+}
+
+.page-link {
+  margin: 0 5px;
+  padding: 5px 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  background-color: white;
+}
+
+.page-link.disabled {
+  color: #ccc;
+  cursor: default;
+}
+
+.page-link.active {
+  background-color: #007bff;
+  color: white;
+}

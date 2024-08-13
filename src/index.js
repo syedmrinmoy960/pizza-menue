@@ -57,7 +57,54 @@ const pizzas = [
     photo: "/Pizzas/pizza6.jpg",
     soldOut: false
   },
-  
+  {
+    name: "Seafood Pizza",
+    category: "Seafood",
+    ingredients: ["Shrimp", "Calamari", "Mussels", "Tomato Sauce", "Mozzarella Cheese"],
+    price: 14.99,
+    photo: "/Pizzas/pizza7.jpg",
+    soldOut: false
+  },
+  {
+    name: "Four Cheese Pizza",
+    category: "Vegetarian",
+    ingredients: ["Mozzarella Cheese", "Parmesan Cheese", "Gorgonzola Cheese", "Feta Cheese", "Tomato Sauce"],
+    price: 13.50,
+    photo: "/Pizzas/pizza8.jpg",
+    soldOut: false
+  },
+  {
+    name: "Buffalo Chicken Pizza",
+    category: "Meat",
+    ingredients: ["Chicken", "Buffalo Sauce", "Mozzarella Cheese", "Blue Cheese"],
+    price: 13.99,
+    photo: "/Pizzas/pizza9.jpg",
+    soldOut: false
+  },
+  {
+    name: "Pesto Pizza",
+    category: "Vegetarian",
+    ingredients: ["Pesto Sauce", "Mozzarella Cheese", "Cherry Tomatoes", "Arugula"],
+    price: 12.99,
+    photo: "/Pizzas/pizza10.jpg",
+    soldOut: false
+  },
+  {
+    name: "Mushroom Truffle Pizza",
+    category: "Vegetarian",
+    ingredients: ["Mushrooms", "Truffle Oil", "Mozzarella Cheese", "Parmesan Cheese", "Garlic"],
+    price: 16.99,
+    photo: "/Pizzas/pizza11.jpg",
+    soldOut: false
+  },
+  {
+    name: "Spicy Italian Pizza",
+    category: "Meat",
+    ingredients: ["Spicy Italian Sausage", "Jalapeños", "Red Onions", "Tomato Sauce", "Mozzarella Cheese"],
+    price: 14.99,
+    photo: "/Pizzas/pizza12.jpg",
+    soldOut: false
+  }
 ];
 
 function App() {
@@ -160,16 +207,59 @@ function Logo() {
   );
 }
 
+// function Menu({ pizzas, addToCart }) {
+//   return (
+//     <div className="grid-container">
+//       {pizzas.map((pizza, index) => (
+//         <Pizza
+//           key={index}
+//           pizza={pizza}
+//           addToCart={addToCart}
+//         />
+//       ))}
+//     </div>
+//   );
+// }
+
 function Menu({ pizzas, addToCart }) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const pizzasPerPage = 6;
+
+  // Calculate the currently displayed pizzas
+  const indexOfLastPizza = currentPage * pizzasPerPage;
+  const indexOfFirstPizza = indexOfLastPizza - pizzasPerPage;
+  const currentPizzas = pizzas.slice(indexOfFirstPizza, indexOfLastPizza);
+
+  // Total pages
+  const totalPages = Math.ceil(pizzas.length / pizzasPerPage);
+
+  // Pagination functions
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const nextPage = () => setCurrentPage(prev => (prev < totalPages ? prev + 1 : prev));
+  const prevPage = () => setCurrentPage(prev => (prev > 1 ? prev - 1 : prev));
+
   return (
     <div className="grid-container">
-      {pizzas.map((pizza, index) => (
+      {currentPizzas.map((pizza, index) => (
         <Pizza
           key={index}
           pizza={pizza}
           addToCart={addToCart}
         />
       ))}
+      <div className="pagination">
+        <button onClick={prevPage} disabled={currentPage === 1} className="page-link">
+          &#9664; Prev
+        </button>
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map(number => (
+          <button key={number} onClick={() => paginate(number)} className={`page-link ${number === currentPage ? 'active' : ''}`}>
+            {number}
+          </button>
+        ))}
+        <button onClick={nextPage} disabled={currentPage === totalPages} className="page-link">
+          Next &#9654;
+        </button>
+      </div>
     </div>
   );
 }
