@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import { FaShoppingCart } from 'react-icons/fa';
 
+
 // Sample pizza data with categories
 const pizzas = [
   {
@@ -56,7 +57,54 @@ const pizzas = [
     photo: "/Pizzas/pizza6.jpg",
     soldOut: false
   },
-  
+  {
+    name: "Seafood Pizza",
+    category: "Seafood",
+    ingredients: ["Shrimp", "Calamari", "Mussels", "Tomato Sauce", "Mozzarella Cheese"],
+    price: 14.99,
+    photo: "/Pizzas/pizza7.jpg",
+    soldOut: false
+  },
+  {
+    name: "Four Cheese Pizza",
+    category: "Vegetarian",
+    ingredients: ["Mozzarella Cheese", "Parmesan Cheese", "Gorgonzola Cheese", "Feta Cheese", "Tomato Sauce"],
+    price: 13.50,
+    photo: "/Pizzas/pizza8.jpg",
+    soldOut: false
+  },
+  {
+    name: "Buffalo Chicken Pizza",
+    category: "Meat",
+    ingredients: ["Chicken", "Buffalo Sauce", "Mozzarella Cheese", "Blue Cheese"],
+    price: 13.99,
+    photo: "/Pizzas/pizza9.jpg",
+    soldOut: false
+  },
+  {
+    name: "Pesto Pizza",
+    category: "Vegetarian",
+    ingredients: ["Pesto Sauce", "Mozzarella Cheese", "Cherry Tomatoes", "Arugula"],
+    price: 12.99,
+    photo: "/Pizzas/pizza10.jpg",
+    soldOut: false
+  },
+  {
+    name: "Mushroom Truffle Pizza",
+    category: "Vegetarian",
+    ingredients: ["Mushrooms", "Truffle Oil", "Mozzarella Cheese", "Parmesan Cheese", "Garlic"],
+    price: 16.99,
+    photo: "/Pizzas/pizza11.jpg",
+    soldOut: false
+  },
+  {
+    name: "Spicy Italian Pizza",
+    category: "Meat",
+    ingredients: ["Spicy Italian Sausage", "Jalapeños", "Red Onions", "Tomato Sauce", "Mozzarella Cheese"],
+    price: 14.99,
+    photo: "/Pizzas/pizza12.jpg",
+    soldOut: false
+  }
 ];
 
 function App() {
@@ -104,7 +152,9 @@ function App() {
             />
           </Routes>
         </div>
-        <Footer />
+      
+      <Footer />
+
       </div>
     </Router>
   );
@@ -152,21 +202,64 @@ function Header({ cart, setCategory, categories }) {
 function Logo() {
   return (
     <div className="logo-container">
-      <a href="pizza.com" className="logo">PizzaBites</a>
+      <a href="/" className="logo">PizzaBites</a>
     </div>
   );
 }
 
+// function Menu({ pizzas, addToCart }) {
+//   return (
+//     <div className="grid-container">
+//       {pizzas.map((pizza, index) => (
+//         <Pizza
+//           key={index}
+//           pizza={pizza}
+//           addToCart={addToCart}
+//         />
+//       ))}
+//     </div>
+//   );
+// }
+
 function Menu({ pizzas, addToCart }) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const pizzasPerPage = 6;
+
+  // Calculate the currently displayed pizzas
+  const indexOfLastPizza = currentPage * pizzasPerPage;
+  const indexOfFirstPizza = indexOfLastPizza - pizzasPerPage;
+  const currentPizzas = pizzas.slice(indexOfFirstPizza, indexOfLastPizza);
+
+  // Total pages
+  const totalPages = Math.ceil(pizzas.length / pizzasPerPage);
+
+  // Pagination functions
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  const nextPage = () => setCurrentPage(prev => (prev < totalPages ? prev + 1 : prev));
+  const prevPage = () => setCurrentPage(prev => (prev > 1 ? prev - 1 : prev));
+
   return (
     <div className="grid-container">
-      {pizzas.map((pizza, index) => (
+      {currentPizzas.map((pizza, index) => (
         <Pizza
           key={index}
           pizza={pizza}
           addToCart={addToCart}
         />
       ))}
+      <div className="pagination">
+        <button onClick={prevPage} disabled={currentPage === 1} className="page-link">
+          &#9664; Prev
+        </button>
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map(number => (
+          <button key={number} onClick={() => paginate(number)} className={`page-link ${number === currentPage ? 'active' : ''}`}>
+            {number}
+          </button>
+        ))}
+        <button onClick={nextPage} disabled={currentPage === totalPages} className="page-link">
+          Next &#9654;
+        </button>
+      </div>
     </div>
   );
 }
@@ -208,10 +301,37 @@ function Pizza({ pizza, addToCart }) {
   );
 }
 
+// function CartPage({ cart, clearCart }) {
+//   return (
+//     <div className="cart-page">
+//       <h2>Your Cart is Ready</h2>
+//       {cart.length === 0 ? (
+//         <p>Your cart is empty.</p>
+//       ) : (
+//         <>
+//           <ul>
+//             {cart.map((item, index) => (
+//               <li key={index} className="cart-item">
+//                 <img src={item.photo} alt={item.name} className="cart-item-photo" />
+//                 <div className="cart-item-details">
+//                   <span>{item.name}</span> - <span>{item.quantity} x ${item.price.toFixed(2)}</span>
+//                 </div>
+//               </li>
+//             ))}
+//           </ul>
+//           <button onClick={clearCart} className="clear-cart-button">Clear Cart</button>
+//           <PaymentForm />
+//         </>
+//       )}
+//     </div>
+//   );
+// }
 function CartPage({ cart, clearCart }) {
+  const totalCost = cart.reduce((acc, item) => acc + item.price * item.quantity, 0).toFixed(2);
+
   return (
     <div className="cart-page">
-      <h2>Your Cart is Ready</h2>
+      <h2>Your Cart</h2>
       {cart.length === 0 ? (
         <p>Your cart is empty.</p>
       ) : (
@@ -226,8 +346,12 @@ function CartPage({ cart, clearCart }) {
               </li>
             ))}
           </ul>
+          <div className="total-cost">
+            <h3>Total Cost: ${totalCost}</h3>
+          </div>
           <button onClick={clearCart} className="clear-cart-button">Clear Cart</button>
           <PaymentForm />
+          
         </>
       )}
     </div>
@@ -257,6 +381,24 @@ function PaymentForm() {
   );
 }
 
+// function Footer() {
+//   const hour = new Date().getHours(); // Get the current hour in 24-hour format
+//   const openhour = 9; // Restaurant opens at 9 AM
+//   const closehour = 18; // Restaurant closes at 6 PM
+//   const isOpen = hour >= openhour && hour < closehour; // Check if the current time is within open hours
+
+//   return (
+//     <footer id="footer">
+//       {new Date().toLocaleTimeString()}
+//       <h2>
+//         Restaurant &copy; All rights reserved (
+//         {isOpen ? "We are open now!" : "Sorry, we are closed"})
+//       </h2>
+//     </footer>
+//   );
+// }
+
+
 function Footer() {
   const hour = new Date().getHours(); // Get the current hour in 24-hour format
   const openhour = 9; // Restaurant opens at 9 AM
@@ -264,15 +406,21 @@ function Footer() {
   const isOpen = hour >= openhour && hour < closehour; // Check if the current time is within open hours
 
   return (
-    <footer id="footer">
-      {new Date().toLocaleTimeString()}
+    <footer id="footer" style={{ textAlign: "center", padding: "20px", background: "#f8f8f8" }}>
+      <p>{new Date().toLocaleTimeString()}</p>
       <h2>
         Restaurant &copy; All rights reserved (
         {isOpen ? "We are open now!" : "Sorry, we are closed"})
       </h2>
+      <div style={{ marginTop: "20px", display: "flex", justifyContent: "center", flexWrap: "wrap" }}>
+        <img src={"/Pizzas/footer.webp"} alt="bKash Logo" style={{ width: "1600px", margin: "30px" }} />
+        {/* Increase the width as necessary; adjust margin for spacing */}
+      </div>
     </footer>
   );
 }
+
+
 
 // React v18
 const root = ReactDOM.createRoot(document.getElementById("root"));
